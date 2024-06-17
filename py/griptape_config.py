@@ -1,6 +1,8 @@
 import json
 import os
 
+from app.app_settings import AppSettings
+from app.user_manager import UserManager
 from server import PromptServer
 
 # Constants for file paths
@@ -8,6 +10,8 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(THIS_DIR)
 DEFAULT_CONFIG_FILE = os.path.join(PARENT_DIR, "griptape_config.json.default")
 USER_CONFIG_FILE = os.path.join(PARENT_DIR, "griptape_config.json")
+
+id = "Comfy.Settings.gtUI"
 
 
 def load_json_file(file_path):
@@ -80,6 +84,9 @@ def load_and_prepare_config(default_file, user_file):
     final_config = merge_configs(default_config, user_config)
     update_config_with_env(final_config)
     save_config(final_config, user_file)
+    print("  \033[34m- Sending environment variables to JavaScript\033[0m")
+    set_custom_settings(final_config)
+    # send_config_to_js(final_config)
     return final_config
 
 
@@ -91,6 +98,20 @@ def set_environment_variables_from_config(config):
     env_config = config.get("env", {})
     for key, value in env_config.items():
         os.environ[key] = str(value)
+
+
+def set_custom_settings(config):
+    user_manager = UserManager()
+
+    app_settings = AppSettings(user_manager)
+    request = None
+    custom_settings = app_settings.get_settings(request)
+
+    # Add Griptape API keys to custom settings
+    custom_settings[id] = config["env"]
+
+    # Save the updated settings
+    app_settings.save_settings(request, custom_settings)
 
 
 def send_config_to_js(config):

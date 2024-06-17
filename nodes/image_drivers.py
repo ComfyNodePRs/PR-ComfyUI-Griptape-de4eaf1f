@@ -10,8 +10,14 @@ from ..py.griptape_config import get_config
 from .base_driver import gtUIBaseImageGenerationDriver
 
 leonardo_models = [
+    # Currently disabled
+    # {
+    #     "name": "Leonardo Phoenix",
+    #     "model": "6b645e3a-d64f-4341-a6d8-7a3690fbf042",
+    #     "url": "https://app.leonardo.ai/models/6b645e3a-d64f-4341-a6d8-7a3690fbf042",
+    # },
     {
-        "name": "default",
+        "name": "Leonardo Diffusion XL",
         "model": "1e60896f-3c26-4296-8ecc-53e2afecc132",
         "url": "https://app.leonardo.ai/models/1e60896f-3c26-4296-8ecc-53e2afecc132",
     },

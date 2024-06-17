@@ -9,3 +9,19 @@
   width: 100%;
   overflow: auto;
 }
+.gtUI-input-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.gtUI-label {
+  width: 150px;
+  padding-right: 12px;
+  display: inline-block;
+}
+.gtUI-input {
+  width:  calc(100% - 160px);
+  box-sizing: border-box;
+  padding: 10px;
+}

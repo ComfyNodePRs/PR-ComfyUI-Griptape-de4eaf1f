@@ -3,12 +3,17 @@ import { $el } from "../../../scripts/ui.js";
 import { ComfyWidgets } from "../../../scripts/widgets.js";
 import { ComfyDialog } from "../../../scripts/ui/dialog.js";
 import { GriptapeConfigDialog } from "./gtUIConfigDialog.js";
+import { api } from "../../../scripts/api.js";
 
 class GriptapeNodes extends EventTarget {
-  constructor() {
+  constructor(app) {
     super();
     this.initializeContextMenu();
     this.injectGriptapeCss();
+  }
+  async handleConfigUpdate(event) {
+    const env= event.data;
+    console.log("Received env", env);
   }
   async initializeContextMenu() {
     const that = this;
@@ -42,13 +47,13 @@ class GriptapeNodes extends EventTarget {
     const that = this;
     return [
       // TODO: Figure out how to pull and set the environment variables
-      // {
-      //   content: "⚙️ Environment Variables",
-      //   callback: (...args) => {
-      //     const dialog = new GriptapeConfigDialog();
-      //     dialog.show();
-      //   },
-      // },
+      {
+        content: "⚙️ Environment Variables",
+        callback: (...args) => {
+          const dialog = new GriptapeConfigDialog(app);
+          dialog.show();
+        },
+      },
       {
         content: "⭐ Star on Github",
         callback: (...args) => {
